@@ -3,7 +3,7 @@ kind: ServiceAccount
 metadata:
   name: airlineprediction-sa
 secrets:
-- name: regcred
+- name: airlineprediction-regcred
 
 ---
 kind: Role
@@ -484,7 +484,7 @@ spec:
             resource: source-repo
       params:
       - name: NAMESPACE
-        value: $GITHUB_USERNAMENAME-stage-environment
+        value: airlineprediction-generator-staging
       - name: DRYRUN
         value: "true"
 ---
@@ -526,7 +526,7 @@ spec:
       - name: YAMLPATHTOIMAGE
         value: "spec.template.spec.containers[0].image"
       - name: NAMESPACE
-        value: $GITHUB_USERNAME-dev-environment
+        value: airlineprediction-generator-dev
 ---
 apiVersion: tekton.dev/v1alpha1
 kind: Pipeline
@@ -546,7 +546,7 @@ spec:
             resource: source-repo
       params:
       - name: NAMESPACE
-        value: $GITHUB_USERNAME-stage-environment
+        value: airlineprediction-generator-staging
 ---
 apiVersion: tekton.dev/v1alpha1
 kind: EventListener

@@ -45,23 +45,24 @@ sed -e "s/<GITHUB_TOKEN>/${GITHUB_TOKEN}/g" templates/webhook-secret.yaml.templa
 ### Generate Github Webhook TaskRun
 sed -e "s/<GITHUB_ORG>/${GITHUB_ORG}/g" -e "s/<GITHUB_USERNAME>/${GITHUB_USERNAME}/g" -e "s/<CLUSTER_NAME>/${CLUSTER_NAME}/g" -e "s/<CLUSTER_DOMAIN>/${CLUSTER_DOMAIN}/g" templates/webhook-taskrun.yaml.template > github-webhooks/wh-create-spring-repo-webhook-run.yaml
 
-oc new-project ${GITHUB_USERNAME}-dev-environment
-oc new-project ${GITHUB_USERNAME}-stage-environment
+oc new-project airlineprediction-generator-dev
+oc new-project airlineprediction-generator-staging
 oc new-project ${GITHUB_USERNAME}-cicd-environment
 
 # create regcred secret
-oc create secret generic regcred --from-file=.dockerconfigjson="${QUAY_USERNAME}-airlinepredictiongenerator-auth.json" --type=kubernetes.io/dockerconfigjson
+#oc create secret generic regcred --from-file=.dockerconfigjson="${QUAY_USERNAME}-airlinepredictiongenerator-auth.json" --type=kubernetes.io/dockerconfigjson
+oc create -f regcred-secret.yaml
 
-# bind admin Cluster Role to demo-sa in dev-environment and stage-environment projects
-oc create rolebinding demo-sa-admin-dev --clusterrole=admin --serviceaccount=${GITHUB_USERNAME}-cicd-environment:demo-sa --namespace=${GITHUB_USERNAME}-dev-environment
-oc create rolebinding demo-sa-admin-stage --clusterrole=admin --serviceaccount=${GITHUB_USERNAME}-cicd-environment:demo-sa --namespace=${GITHUB_USERNAME}-stage-environment
+# bind admin Cluster Role to airlineprediction-sa in dev-environment and stage-environment projects
+oc create -f rolebindings/airlineprediction-sa-admin-dev_rb.yaml
+oc create -f rolebindings/airlineprediction-sa-admin-stage_rb.yaml
 
 # run tasks
 cat fullpipeline.yaml  | sed s"/\$QUAY_USERNAME/$QUAY_USERNAME/" | sed s"/\$GITHUB_USERNAME/$GITHUB_USERNAME/" | sed s"/\$DEPLOYMENT_PATH/$DEPLOYMENT_PATH/" | oc apply -f -
 
-# add additional security policies for demo-sa
-oc adm policy add-scc-to-user privileged -z demo-sa
-oc adm policy add-role-to-user edit -z demo-sa
+# add additional security policies for airlineprediction-sa
+oc adm policy add-scc-to-user privileged -z airlineprediction-sa
+oc adm policy add-role-to-user edit -z airlineprediction-sa
 
 ### setup github webhook
 echo
