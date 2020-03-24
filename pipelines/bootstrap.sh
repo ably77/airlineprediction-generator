@@ -50,7 +50,7 @@ oc new-project ${GITHUB_USERNAME}-stage-environment
 oc new-project ${GITHUB_USERNAME}-cicd-environment
 
 # create regcred secret
-oc create secret generic regcred --from-file=.dockerconfigjson="${QUAY_USERNAME}-airlineprediction-generator-auth.json" --type=kubernetes.io/dockerconfigjson
+oc create secret generic regcred --from-file=.dockerconfigjson="${QUAY_USERNAME}-airlinepredictiongenerator-auth.json" --type=kubernetes.io/dockerconfigjson
 
 # bind admin Cluster Role to demo-sa in dev-environment and stage-environment projects
 oc create rolebinding demo-sa-admin-dev --clusterrole=admin --serviceaccount=${GITHUB_USERNAME}-cicd-environment:demo-sa --namespace=${GITHUB_USERNAME}-dev-environment
