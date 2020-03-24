@@ -1,2 +1,5 @@
 resources:
 - deployment.yaml
+images:
+- name: quay.io/ally/airlineprediction-generator
+  newTag: "b42c1fa194487d8b1c9f55181d723a40cdb61cc7"
