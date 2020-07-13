@@ -1,5 +1,5 @@
 FROM openjdk:8-jre
-RUN apt-get update && apt-get install -y curl
+#RUN apt-get update && apt-get install -y curl
 
 # use alpine image
 # FROM openjdk:8-jre-alpine
