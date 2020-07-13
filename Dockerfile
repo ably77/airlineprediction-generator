@@ -4,7 +4,7 @@ MAINTAINER ably77
 # for openjdk:8-jre-alpine image
 #RUN apk --no-cache add curl
 
-RUN sudo apt-get install curl
+RUN apt-get update && apt-get install -y curl
 
 ENV SCALA_VERSION 2.12
 ENV KAFKA_VERSION 2.4.1
