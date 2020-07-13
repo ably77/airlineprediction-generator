@@ -1,6 +1,8 @@
 FROM java:openjdk-8-jre
 MAINTAINER ably77
 
+RUN apk --no-cache add curl
+
 ENV SCALA_VERSION 2.12
 ENV KAFKA_VERSION 2.4.1
 ADD /generator.sh /bin/
