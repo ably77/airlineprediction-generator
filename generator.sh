@@ -8,4 +8,5 @@ while read line
 do
         echo "$line" | ./kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap.myproject:9092 --topic airlineinputtopic;
 done < allyears.csv
+#done < allyears2k.csv
 exec "$@"
