@@ -7,8 +7,8 @@ FROM openjdk:8-jre
 #RUN apk --no-cache add curl
 
 MAINTAINER ably77
-ENV SCALA_VERSION 2.12
-ENV KAFKA_VERSION 2.4.1
+ENV SCALA_VERSION 2.13
+ENV KAFKA_VERSION 2.5.0
 ADD /generator.sh /bin/
 ADD allyears.csv /bin/
 ADD allyears2k.csv /bin/
