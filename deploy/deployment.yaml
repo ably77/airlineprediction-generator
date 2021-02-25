@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
       - name: kafka-streams-workload-generator
-        image: ably77/airlineprediction-generator:v9
+        image: ably77/airlineprediction-generator:v1
